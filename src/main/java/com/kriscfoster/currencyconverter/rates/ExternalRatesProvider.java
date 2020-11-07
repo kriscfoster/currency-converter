@@ -1,6 +1,7 @@
 package com.kriscfoster.currencyconverter.rates;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,12 +10,13 @@ import java.util.Date;
 import java.util.Map;
 
 @Service
-public class RatesService {
+@ConditionalOnProperty(name="rates.provider.external", havingValue = "true")
+public class ExternalRatesProvider implements RatesProvider {
 
     private String accessKey;
     private final RestTemplate restTemplate;
 
-    public RatesService(@Value("${open-exchange-rates.access-key}") String accessKey) {
+    public ExternalRatesProvider(@Value("${open-exchange-rates.access-key}") String accessKey) {
         this.accessKey = accessKey;
         this.restTemplate = new RestTemplate();
     }

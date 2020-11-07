@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Currency Converter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Currency Converter</h1>
+<form th:action="@{/exchange}">
+    <label for="from-cur-select">Convert from:</label>
+    <select name="fromCur" id="from-cur-select" class="form-element">
+        <option th:each="currency : ${currencies}"
+                th:value="${currency}"
+                th:text="${currency}"
+                th:selected="${#strings.equals(param.fromCur, currency)}">
+        </option>
+    </select>
+    <label for="to-cur-select">Convert to:</label>
+    <select name="toCur" id="to-cur-select" class="form-element">
+        <option th:each="currency : ${currencies}"
+                th:value="${currency}"
+                th:text="${currency}"
+                th:selected="${#strings.equals(param.toCur, currency)}">
+        </option>
+    </select>
+    <label for="value">Value:</label>
+    <input th:name="value" id="value" class="form-element" th:value="${param.value}">
+    <label for="date">Exchange rate date:</label>
+    <input type="date" th:name="date" id="date" class="form-element" th:value="${param.date}">
+    <button type="submit">convert</button>
+</form>
+<div>
+    <p th:text="${converted}" />
+</div>
+</body>
+</html>

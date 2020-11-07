@@ -1,6 +1,6 @@
 package com.kriscfoster.currencyconverter.exchange;
 
-import com.kriscfoster.currencyconverter.rates.RatesService;
+import com.kriscfoster.currencyconverter.rates.ExternalRatesProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,13 +20,13 @@ class ExchangeServiceTest {
 
     @BeforeEach
     public void setup() {
-        RatesService ratesService = mock(RatesService.class);
+        ExternalRatesProvider externalRatesProvider = mock(ExternalRatesProvider.class);
         Map<String, Number> rates = new HashMap();
         rates.put(EUR.toString(), 0.846703);
         rates.put(GBP.toString(), 0.765623);
         rates.put(USD.toString(), 1);
-        when(ratesService.getRates(any())).thenReturn(rates);
-        this.exchangeService = new ExchangeService(ratesService);
+        when(externalRatesProvider.getRates(any())).thenReturn(rates);
+        this.exchangeService = new ExchangeService(externalRatesProvider);
     }
 
     @Test
