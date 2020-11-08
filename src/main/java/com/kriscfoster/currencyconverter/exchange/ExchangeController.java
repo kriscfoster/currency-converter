@@ -37,8 +37,9 @@ public class ExchangeController {
             Model model) {
         Number converted = exchangeService.convert(fromCur, toCur, date, value);
         List currencies = exchangeService.convertibleCurrencies();
-        model.addAttribute("converted", converted);
         model.addAttribute("currencies", currencies);
+        model.addAttribute("conversion", String.format("%s %s = %s %s",
+                value, fromCur, converted, toCur));
         return "exchange";
     }
 }

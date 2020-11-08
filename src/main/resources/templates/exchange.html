@@ -3,35 +3,53 @@
 <head>
     <title>Currency Converter</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/bootstrap.min.css">
 </head>
 <body>
-<h1>Currency Converter</h1>
-<form th:action="@{/exchange}">
-    <label for="from-cur-select">Convert from:</label>
-    <select name="fromCur" id="from-cur-select" class="form-element">
-        <option th:each="currency : ${currencies}"
-                th:value="${currency}"
-                th:text="${currency}"
-                th:selected="${#strings.equals(param.fromCur, currency)}">
-        </option>
-    </select>
-    <label for="to-cur-select">Convert to:</label>
-    <select name="toCur" id="to-cur-select" class="form-element">
-        <option th:each="currency : ${currencies}"
-                th:value="${currency}"
-                th:text="${currency}"
-                th:selected="${#strings.equals(param.toCur, currency)}">
-        </option>
-    </select>
-    <label for="value">Value:</label>
-    <input th:name="value" id="value" class="form-element" th:value="${param.value}">
-    <label for="date">Exchange rate date:</label>
-    <input type="date" th:name="date" id="date" class="form-element" th:value="${param.date}">
-    <button type="submit">convert</button>
-</form>
-<div>
-    <p th:text="${converted}" />
+<div class="container">
+    <div class="m-5">
+    <h1>Currency Converter</h1>
+    <form th:action="@{/exchange}">
+        <div class="form-group">
+            <label for="value">Amount</label>
+            <input th:name="value" id="value" class="form-control" th:value="${param.value}">
+        </div>
+        <div class="form-group">
+            <label for="from-cur-select">From</label>
+            <select name="fromCur" id="from-cur-select" class="form-control custom-select">
+                <option th:each="currency : ${currencies}"
+                        th:value="${currency}"
+                        th:text="${currency}"
+                        th:selected="${#strings.equals(param.fromCur, currency)}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="to-cur-select">To</label>
+            <select name="toCur" id="to-cur-select" class="form-control custom-select">
+                <option th:each="currency : ${currencies}"
+                        th:value="${currency}"
+                        th:text="${currency}"
+                        th:selected="${#strings.equals(param.toCur, currency)}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="date">Exchange Rate Date</label>
+            <input
+                    type="date"
+                    th:name="date"
+                    id="date"
+                    class="form-control"
+                    th:value="${param.date !=null ? param.date : #dates.format(#dates.createNow(),'YYYY-MM-dd')}"
+            >
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary">Convert</button>
+    </form>
+    <div class="card p-5 m-5">
+        <h2 th:text="${conversion}" />
+    </div>
+</div>
 </div>
 </body>
 </html>
