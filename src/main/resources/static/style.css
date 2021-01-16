@@ -1,3 +1,5 @@
-.form-element {
-  display: block;
+.footer {
+  position: absolute;
+  bottom: 25px;
+  width: 100%;
 }
